@@ -6,8 +6,8 @@ Pod::Spec.new do |s|
   s.version          = '0.0.1'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
-  s.swift_version    = '4.2'
-  s.swift_versions   = ['4.0', '4.2', '5.0']
+  s.swift_version    = '5.0'
+  s.swift_versions   = ['4.2', '5.0']
 A new flutter plugin project.
                        DESC
   s.homepage         = 'http://example.com'
@@ -17,7 +17,8 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-
-  s.ios.deployment_target = '8.0'
+  
+  s.ios.deployment_target = '12.0'
+  s.defines_module = true
 end
 
