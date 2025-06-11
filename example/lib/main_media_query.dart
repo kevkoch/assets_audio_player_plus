@@ -6,7 +6,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'player/PlayingControls.dart';
 import 'player/PositionSeekWidget.dart';
 import 'player/SongsSelector.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 void main() {
   AssetsAudioPlayerPlus.setupNotificationsOpenAction((notification) {
@@ -34,13 +34,13 @@ class _MyAppState extends State<MyApp> {
   var audios = <Audio>[];
 
   void fetchAudios() async {
-    /// create a FlutterAudioQuery instance.
-    final audioQuery = FlutterAudioQuery();
-    final songs = await audioQuery.getSongs();
+    /// create an OnAudioQuery instance.
+    final audioQuery = OnAudioQuery();
+    final songs = await audioQuery.querySongs();
     final fetchedAudios = <Audio>[];
     for (final song in songs) {
-      if (song.filePath != null) {
-        final file = Audio.file(song.filePath!,
+      if (song.data.isNotEmpty) {
+        final file = Audio.file(song.data,
             metas: Metas(
               artist: song.artist,
               album: song.album,
