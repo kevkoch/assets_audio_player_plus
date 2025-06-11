@@ -19,6 +19,5 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   
   s.ios.deployment_target = '12.0'
-  s.defines_module = true
 end
 
