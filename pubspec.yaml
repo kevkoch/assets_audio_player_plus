@@ -1,6 +1,7 @@
 name: assets_audio_player_plus
 description: Play music/audio stored in assets files directly from Flutter & Network, Radio, LiveStream, Local files. Compatible with Android, iOS, and macOS.
 version: 3.1.2
+publish_to: 'none'
 
 homepage: https://github.com/cyclone-pk/Asset_audio_player_plus
 
