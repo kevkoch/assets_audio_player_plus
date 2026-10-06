@@ -1,5 +1,6 @@
 package com.github.florent37.assets_audio_player.notification
 
+import android.app.ForegroundServiceStartNotAllowedException
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.PendingIntent
@@ -347,10 +348,18 @@ class NotificationService : Service() {
                 .setShowWhen(false)
                 .build()
 
-        if (Build.VERSION.SDK_INT >= 29) {
-            startForeground(NOTIFICATION_ID, notification, FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-        } else {
-            startForeground(NOTIFICATION_ID, notification)
+        try {
+            if (Build.VERSION.SDK_INT >= 29) {
+                startForeground(NOTIFICATION_ID, notification, FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+            } else {
+                startForeground(NOTIFICATION_ID, notification)
+            }
+        } catch (e: Exception) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && e is ForegroundServiceStartNotAllowedException) {
+                postNotification(notification)
+            } else {
+                throw e
+            }
         }
 
         //fix for https://github.com/florent37/Flutter-AssetsAudioPlayer/issues/139
@@ -358,6 +367,13 @@ class NotificationService : Service() {
            stopForeground(STOP_FOREGROUND_DETACH)
         }
 
+    }
+
+    private fun postNotification(notification: Notification) {
+        try {
+            NotificationManagerCompat.from(applicationContext).notify(NOTIFICATION_ID, notification)
+        } catch (e: SecurityException) {
+        }
     }
 
     private fun createNotificationChannel() {
